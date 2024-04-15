@@ -2143,7 +2143,7 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3077,6 +3077,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tf_Crosshair: {fileID: 1390226644}
+  tf_Cam: {fileID: 963194228}
+  sightSensitivity: 0.5
+  lookLimitX: 15
+  lookLimitY: 15
 --- !u!1 &1634821872
 GameObject:
   m_ObjectHideFlags: 0
