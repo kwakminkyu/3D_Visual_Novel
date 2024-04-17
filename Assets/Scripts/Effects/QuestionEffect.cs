@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class QuestionEffect : MonoBehaviour
 {
+    public static bool isCollide = false;
+
     [SerializeField] private float moveSpeed;
     private Vector3 targetPos;
 
@@ -29,6 +31,8 @@ public class QuestionEffect : MonoBehaviour
                 effect.Play();
                 targetPos = Vector3.zero;
                 gameObject.SetActive(false);
+
+                isCollide = true;
             }
         }
     }

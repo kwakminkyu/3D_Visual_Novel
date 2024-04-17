@@ -29,11 +29,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CrosshairMoving();
-        ViewMoving();
-        KeyViewMoving();
-        CameraLimit();
-        NotCamUI();
+        if (!InteractionController.isInteract)
+        {
+            CrosshairMoving();
+            ViewMoving();
+            KeyViewMoving();
+            CameraLimit();
+            NotCamUI();
+        }
     }
 
     private void NotCamUI()

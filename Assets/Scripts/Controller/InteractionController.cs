@@ -5,17 +5,32 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
+    public static bool isInteract = false;
+
     [SerializeField] private Camera cam;
     private RaycastHit hitInfo;
 
     [SerializeField] private GameObject normalCrosshair;
     [SerializeField] private GameObject InteractiveCrosshair;
+    [SerializeField] private GameObject crosshair;
+    [SerializeField] private GameObject cursor;
 
     private bool isContact;
-    private bool isInteract;
 
     [SerializeField] private ParticleSystem questionEffect;
 
+    private DialougueManager _dialougueManager;
+
+    public void HideUI()
+    {
+        crosshair.SetActive(false);
+        cursor.SetActive(false);
+    }
+
+    private void Awake()
+    {
+        _dialougueManager = FindAnyObjectByType<DialougueManager>();
+    }
 
     private void Update()
     {
@@ -66,11 +81,14 @@ public class InteractionController : MonoBehaviour
 
     private void ClickLeftButton()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!isInteract)
         {
-            if (isContact)
+            if (Input.GetMouseButtonDown(0))
             {
-                Interact();
+                if (isContact)
+                {
+                    Interact();
+                }
             }
         }
     }
@@ -83,5 +101,15 @@ public class InteractionController : MonoBehaviour
         Vector3 targetPos = hitInfo.transform.position;
         questionEffect.GetComponent<QuestionEffect>().SetTarget(targetPos);
         questionEffect.transform.position = cam.transform.position;
+
+        StartCoroutine(WaitCollision());
+    }
+
+    private IEnumerator WaitCollision()
+    {
+        yield return new WaitUntil(()=>QuestionEffect.isCollide);
+        QuestionEffect.isCollide = false;
+
+        _dialougueManager.ShowDialogue();
     }
 }
