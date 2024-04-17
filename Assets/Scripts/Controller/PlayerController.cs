@@ -15,12 +15,43 @@ public class PlayerController : MonoBehaviour
     float currentAngleX;
     float currentAngleY;
 
+    [SerializeField] GameObject notCamUp;
+    [SerializeField] GameObject notCamDown;
+    [SerializeField] GameObject notCamLeft;
+    [SerializeField] GameObject notCamRight;
+
+    float originPosY;
+
+    private void Start()
+    {
+        originPosY = transform.localPosition.y;
+    }
+
     private void Update()
     {
         CrosshairMoving();
         ViewMoving();
         KeyViewMoving();
         CameraLimit();
+        NotCamUI();
+    }
+
+    private void NotCamUI()
+    {
+        notCamUp.SetActive(false);
+        notCamDown.SetActive(false);
+        notCamLeft.SetActive(false);
+        notCamRight.SetActive(false);
+
+        if (currentAngleY >= lookLimitX)
+            notCamRight.SetActive(true);
+        else if (currentAngleY <= -lookLimitX)
+            notCamLeft.SetActive(true);
+
+        if (currentAngleX <= -lookLimitY && tf_Cam.localPosition.y == originPosY + camBoundary.y)
+            notCamUp.SetActive(true);
+        else if (currentAngleX >= lookLimitY && tf_Cam.localPosition.y == originPosY - camBoundary.y)
+            notCamDown.SetActive(true);
     }
 
     private void CameraLimit()
@@ -30,10 +61,10 @@ public class PlayerController : MonoBehaviour
         else if (tf_Cam.localPosition.x <= camBoundary.x)
             tf_Cam.localPosition = new Vector3(-camBoundary.x, tf_Cam.localPosition.y, tf_Cam.localPosition.z);
 
-        if (tf_Cam.localPosition.y >= 1 + camBoundary.y)
-            tf_Cam.localPosition = new Vector3(tf_Cam.localPosition.x, 1 + camBoundary.y, tf_Cam.localPosition.z);
-        else if (tf_Cam.localPosition.y <= 1 - camBoundary.y)
-            tf_Cam.localPosition = new Vector3(tf_Cam.localPosition.x, 1 -camBoundary.y, tf_Cam.localPosition.z);
+        if (tf_Cam.localPosition.y >= originPosY + camBoundary.y)
+            tf_Cam.localPosition = new Vector3(tf_Cam.localPosition.x, originPosY + camBoundary.y, tf_Cam.localPosition.z);
+        else if (tf_Cam.localPosition.y <= originPosY - camBoundary.y)
+            tf_Cam.localPosition = new Vector3(tf_Cam.localPosition.x, originPosY - camBoundary.y, tf_Cam.localPosition.z);
     }
 
     private void KeyViewMoving()
