@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Transform tf_Crosshair;
+    [SerializeField] private Transform tf_Crosshair;
 
-    [SerializeField] Transform tf_Cam;
+    [SerializeField] private Transform tf_Cam;
 
-    [SerializeField] Vector2 camBoundary;
-    [SerializeField] float sightMoveSpeed;
-    [SerializeField] float sightSensitivity;
-    [SerializeField] float lookLimitX;
-    [SerializeField] float lookLimitY;
-    float currentAngleX;
-    float currentAngleY;
+    [SerializeField] private Vector2 camBoundary;
+    [SerializeField] private float sightMoveSpeed;
+    [SerializeField] private float sightSensitivity;
+    [SerializeField] private float lookLimitX;
+    [SerializeField] private float lookLimitY;
+    private float currentAngleX;
+    private float currentAngleY;
 
-    [SerializeField] GameObject notCamUp;
-    [SerializeField] GameObject notCamDown;
-    [SerializeField] GameObject notCamLeft;
-    [SerializeField] GameObject notCamRight;
+    [SerializeField] private GameObject notCamUp;
+    [SerializeField] private GameObject notCamDown;
+    [SerializeField] private GameObject notCamLeft;
+    [SerializeField] private GameObject notCamRight;
 
-    float originPosY;
+    private float originPosY;
 
     private void Start()
     {

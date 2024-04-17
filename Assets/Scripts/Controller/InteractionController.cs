@@ -5,17 +5,22 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
-    [SerializeField] Camera cam;
-    RaycastHit hitInfo;
+    [SerializeField] private Camera cam;
+    private RaycastHit hitInfo;
 
-    [SerializeField] GameObject normalCrosshair;
-    [SerializeField] GameObject InteractiveCrosshair;
+    [SerializeField] private GameObject normalCrosshair;
+    [SerializeField] private GameObject InteractiveCrosshair;
 
     private bool isContact;
+    private bool isInteract;
+
+    [SerializeField] private ParticleSystem questionEffect;
+
 
     private void Update()
     {
         CheckObject();
+        ClickLeftButton();
     }
 
     private void CheckObject()
@@ -57,5 +62,26 @@ public class InteractionController : MonoBehaviour
             InteractiveCrosshair.SetActive(false);
             normalCrosshair.SetActive(true);
         }
+    }
+
+    private void ClickLeftButton()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (isContact)
+            {
+                Interact();
+            }
+        }
+    }
+
+    private void Interact()
+    {
+        isInteract = true;
+
+        questionEffect.gameObject.SetActive(true);
+        Vector3 targetPos = hitInfo.transform.position;
+        questionEffect.GetComponent<QuestionEffect>().SetTarget(targetPos);
+        questionEffect.transform.position = cam.transform.position;
     }
 }

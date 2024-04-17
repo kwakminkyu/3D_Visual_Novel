@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    [SerializeField] float spinSpeed;
-    [SerializeField] Vector3 spinDir;
+    [SerializeField] private float spinSpeed;
+    [SerializeField] private Vector3 spinDir;
 
     private void Update()
     {
