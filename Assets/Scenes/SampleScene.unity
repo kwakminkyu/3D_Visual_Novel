@@ -3078,6 +3078,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tf_Crosshair: {fileID: 1390226644}
   tf_Cam: {fileID: 963194228}
+  camBoundary: {x: 0.5, y: 1.3}
+  sightMoveSpeed: 0.02
   sightSensitivity: 0.5
   lookLimitX: 15
   lookLimitY: 15
