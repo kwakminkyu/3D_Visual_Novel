@@ -134,7 +134,7 @@ public class InteractionController : MonoBehaviour
         yield return new WaitUntil(()=>QuestionEffect.isCollide);
         QuestionEffect.isCollide = false;
 
-        _dialougueManager.ShowDialogue();
+        _dialougueManager.ShowDialogue(hitInfo.transform.GetComponent<InteractionEvent>().GetDialogue());
     }
 
     private IEnumerator Interaction(bool appear)
