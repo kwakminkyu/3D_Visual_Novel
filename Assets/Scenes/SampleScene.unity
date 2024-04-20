@@ -5496,7 +5496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     name: Meet BongRan
-    line: {x: 1, y: 3}
+    line: {x: 1, y: 4}
     dialogues:
     - name: 
       contexts: []

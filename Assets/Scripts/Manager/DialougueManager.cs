@@ -83,21 +83,50 @@ public class DialougueManager : MonoBehaviour
 
         string replaceText = dialogues[lineCount].contexts[contextCount];
         replaceText = replaceText.Replace("`", ",");
+        replaceText = replaceText.Replace("\\n", "\n");
 
-        txtName.text = dialogues[lineCount].name;
+        bool white = false, yellow = false, syan = false;
+        bool ignore = false;
+
         for (int i = 0; i < replaceText.Length; i++)
         {
-            txtDialogue.text += replaceText[i];
+            switch (replaceText[i])
+            {
+                case '¨ã': white = true; yellow = false; syan = false; ignore = true; break;
+                case '¨å': white = false; yellow = true; syan = false; ignore = true; break;
+                case '¨Ï': white = false; yellow = false; syan = true; ignore = true; break;
+            }
+            
+            string letter = replaceText[i].ToString();
+
+            if (!ignore)
+            {
+                if (white) { letter = "<color=#ffffff>" + letter + "</color>"; }
+                else if (yellow) { letter = "<color=#ffff00>" + letter + "</color>"; }
+                else if (syan) { letter = "<color=#42dee3>" + letter + "</color>"; }
+                txtDialogue.text += letter;
+            }
+            ignore = false;
+
             yield return new WaitForSeconds(textDelay);
         }
-
         isNext = true;
-        yield return null;
     }
 
     private void SettingUI(bool flag)
     {
         dialogueBar.SetActive(flag);
-        dialogueNameBar.SetActive(flag);
+        if (flag)
+        {
+            if (dialogues[lineCount].name == "")
+            {
+                dialogueNameBar.SetActive(false);
+            }
+            else
+            {
+                dialogueNameBar.SetActive(true);
+                txtName.text = dialogues[lineCount].name;
+            }
+        }
     }
 }
