@@ -14532,6 +14532,7 @@ MonoBehaviour:
   dialogueNameBar: {fileID: 592485135}
   txtDialogue: {fileID: 433475779}
   txtName: {fileID: 2032121438}
+  textDelay: 0.01
 --- !u!1 &1862964690
 GameObject:
   m_ObjectHideFlags: 0

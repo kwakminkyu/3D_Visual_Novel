@@ -27,12 +27,14 @@ public class InteractionController : MonoBehaviour
 
     private DialougueManager _dialougueManager;
 
-    public void HideUI()
+    public void SettingUI(bool flag)
     {
-        crosshair.SetActive(false);
-        cursor.SetActive(false);
-        targetNameBar.SetActive(false);
+        crosshair.SetActive(flag);
+        cursor.SetActive(flag);
+        targetNameBar.SetActive(flag);
+        isInteract = !flag;
     }
+
 
     private void Awake()
     {
