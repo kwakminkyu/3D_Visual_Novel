@@ -1,7 +1,7 @@
-ID,Name,Context,Sprite Name ,Comment
-1,BongRan,Hi..I'm ⓨBongRanⓦ,BongRan0,Introduction BongRan
-,,your name..,BongRan1,
-2,Protagonist,Oh!.. HI!,,
-,,I'm Jone Smith \nBut` you can just call me Jonney,,
-3,BongRan,Ok..Jonney,BongRan0,
-4,,ⓒBongRan said weaklyⓦ,,
+ID,Name,Context,Sprite Name ,Voice Name,Comment
+1,BongRan,①Hi..I'm ⓨBongRanⓦ,BongRan0,bongran00,Introduction BongRan
+,,your name..,BongRan1,,
+2,Protagonist,Oh!.. HI!,,,
+,,I'm Jone Smith \nBut` you can just call me Jonney,,,
+3,BongRan,Ok..Jonney,BongRan0,bongran01,
+4,,②ⓒBongRan said weaklyⓦ,,,

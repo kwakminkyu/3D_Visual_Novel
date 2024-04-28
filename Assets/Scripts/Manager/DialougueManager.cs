@@ -96,6 +96,14 @@ public class DialougueManager : MonoBehaviour
         }
     }
 
+    private void PlaySound()
+    {
+        if (dialogues[lineCount].voiceName[contextCount] != "")
+        {
+            SoundManager.instance.PlaySound(dialogues[lineCount].voiceName[contextCount], 2);
+        }
+    }
+
     private IEnumerator CameraTargettingType()
     {
         switch (dialogues[lineCount].cameraType)
@@ -138,6 +146,7 @@ public class DialougueManager : MonoBehaviour
     {
         SettingUI(true);
         ChangeSprite();
+        PlaySound();
 
         string replaceText = dialogues[lineCount].contexts[contextCount];
         replaceText = replaceText.Replace("`", ",");
@@ -153,6 +162,8 @@ public class DialougueManager : MonoBehaviour
                 case 'иу': white = true; yellow = false; syan = false; ignore = true; break;
                 case 'их': white = false; yellow = true; syan = false; ignore = true; break;
                 case 'и╧': white = false; yellow = false; syan = true; ignore = true; break;
+                case 'ич': StartCoroutine(_splashManager.Splash()); SoundManager.instance.PlaySound("Emotion0", 1); ignore = true; break;
+                case 'иш': StartCoroutine(_splashManager.Splash()); SoundManager.instance.PlaySound("Emotion1", 1); ignore = true; break;
             }
             
             string letter = replaceText[i].ToString();
