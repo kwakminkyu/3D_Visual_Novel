@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    [SerializeField] private float spinSpeed;
-    [SerializeField] private Vector3 spinDir;
+    [SerializeField] private Transform tf_target;
 
     private void Update()
     {
-        transform.Rotate(spinDir * spinSpeed * Time.deltaTime);
+        if (tf_target != null)
+        {
+            Quaternion t_rotation = Quaternion.LookRotation(tf_target.position - transform.position);
+            Vector3 t_euler = new Vector3(0, t_rotation.eulerAngles.y, 0);
+            transform.eulerAngles = t_euler;
+        }
     }
 }

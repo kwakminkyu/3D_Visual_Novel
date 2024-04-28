@@ -23,11 +23,17 @@ public class DialougueManager : MonoBehaviour
     private int lineCount;
     private int contextCount;
 
+    private CameraController _cameraController;
     private InteractionController _interactionController;
+    private SpriteManager _spriteManager;
+    private SplashManager _splashManager;
 
     private void Awake()
     {
+        _cameraController = FindAnyObjectByType<CameraController>();
         _interactionController = FindAnyObjectByType<InteractionController>();
+        _spriteManager = FindAnyObjectByType<SpriteManager>();
+        _splashManager = FindAnyObjectByType<SplashManager>();
     }
 
     private void Update()
@@ -46,7 +52,9 @@ public class DialougueManager : MonoBehaviour
                     {
                         contextCount = 0;
                         if (++lineCount < dialogues.Length)
-                            StartCoroutine(TypeWriter());
+                        {
+                            StartCoroutine(CameraTargettingType());
+                        }
                         else
                             EndDialogue();
                     }
@@ -62,8 +70,8 @@ public class DialougueManager : MonoBehaviour
         txtName.text = "";
         _interactionController.SettingUI(false);
         this.dialogues = dialogues;
-
-        StartCoroutine(TypeWriter());
+        _cameraController.CamOriginSetting();
+        StartCoroutine(CameraTargettingType());
     }
 
     private void EndDialogue()
@@ -73,13 +81,63 @@ public class DialougueManager : MonoBehaviour
         lineCount = 0;
         dialogues = null;
         isNext = false;
-        _interactionController.SettingUI(true);
+        _cameraController.CameraTargetting(null, 0.05f, true, true);
         SettingUI(false);
+    }
+
+    private void ChangeSprite()
+    {
+        if (dialogues[lineCount].spriteName[contextCount] != "")
+        {
+            StartCoroutine(_spriteManager.SpriteChangeCoroutine(
+                dialogues[lineCount].tf_target,
+                dialogues[lineCount].spriteName[contextCount]
+                )); 
+        }
+    }
+
+    private IEnumerator CameraTargettingType()
+    {
+        switch (dialogues[lineCount].cameraType)
+        {
+            case CameraType.ObjectFront:
+                _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+                break;
+            case CameraType.Reset:
+                _cameraController.CameraTargetting(null, 0.05f, true);
+                break;
+            case CameraType.FadeIn:
+                SettingUI(false);
+                SplashManager.isFinished = false;
+                StartCoroutine(_splashManager.FadeIn(false, true));
+                yield return new WaitUntil(()=> SplashManager.isFinished);
+                break;
+            case CameraType.FadeOut:
+                SettingUI(false);
+                SplashManager.isFinished = false;
+                StartCoroutine(_splashManager.FadeOut(false, true));
+                yield return new WaitUntil(()=> SplashManager.isFinished);
+                break;
+            case CameraType.FlashIn:
+                SettingUI(false);
+                SplashManager.isFinished = false;
+                StartCoroutine(_splashManager.FadeIn(true, true));
+                yield return new WaitUntil(()=> SplashManager.isFinished);
+                break;
+            case CameraType.FlashOut:
+                SettingUI(false);
+                SplashManager.isFinished = false;
+                StartCoroutine(_splashManager.FadeOut(true, true));
+                yield return new WaitUntil(()=> SplashManager.isFinished);
+                break;
+        }
+        StartCoroutine(TypeWriter());
     }
 
     private IEnumerator TypeWriter()
     {
         SettingUI(true);
+        ChangeSprite();
 
         string replaceText = dialogues[lineCount].contexts[contextCount];
         replaceText = replaceText.Replace("`", ",");
@@ -127,6 +185,10 @@ public class DialougueManager : MonoBehaviour
                 dialogueNameBar.SetActive(true);
                 txtName.text = dialogues[lineCount].name;
             }
+        }
+        else
+        {
+            dialogueNameBar.SetActive(false);
         }
     }
 }

@@ -39,6 +39,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ResetCam()
+    {
+        currentAngleX = 0;
+        currentAngleY = 0;
+    }
+
     private void NotCamUI()
     {
         notCamUp.SetActive(false);

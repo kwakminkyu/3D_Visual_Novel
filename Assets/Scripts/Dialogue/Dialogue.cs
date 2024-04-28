@@ -2,14 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CameraType
+{
+    ObjectFront,
+    Reset,
+    FadeOut,
+    FadeIn,
+    FlashOut,
+    FlashIn
+}
+
 [System.Serializable]
 public class Dialogue
 {
-    [Tooltip("character name")]
-    public string name;
+    [Header("Camera Target")]
+    public CameraType cameraType;
+    public Transform tf_target;
 
-    [Tooltip("context")]
+    [HideInInspector]
+    public string name;
+    [HideInInspector]
     public string[] contexts;
+    [HideInInspector]
+    public string[] spriteName;
 }
 
 [System.Serializable]
