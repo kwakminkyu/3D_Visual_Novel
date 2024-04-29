@@ -27,6 +27,8 @@ public class DialougueManager : MonoBehaviour
     private InteractionController _interactionController;
     private SpriteManager _spriteManager;
     private SplashManager _splashManager;
+    private CutSceneManager _cutSceneManager;
+    private SlideManager _slideManager;
 
     private void Awake()
     {
@@ -34,6 +36,8 @@ public class DialougueManager : MonoBehaviour
         _interactionController = FindAnyObjectByType<InteractionController>();
         _spriteManager = FindAnyObjectByType<SpriteManager>();
         _splashManager = FindAnyObjectByType<SplashManager>();
+        _cutSceneManager = FindAnyObjectByType<CutSceneManager>();
+        _slideManager = FindAnyObjectByType<SlideManager>();
     }
 
     private void Update()
@@ -56,7 +60,7 @@ public class DialougueManager : MonoBehaviour
                             StartCoroutine(CameraTargettingType());
                         }
                         else
-                            EndDialogue();
+                            StartCoroutine(EndDialogue());
                     }
                 }
             }
@@ -74,8 +78,16 @@ public class DialougueManager : MonoBehaviour
         StartCoroutine(CameraTargettingType());
     }
 
-    private void EndDialogue()
+    private IEnumerator EndDialogue()
     {
+        if (_cutSceneManager.CheckCutScene())
+        {
+            SettingUI(false);
+            CutSceneManager.isFinished = false;
+            StartCoroutine(_cutSceneManager.CutSceneCoroutine(null, false));
+            yield return new WaitUntil(() => CutSceneManager.isFinished);
+            _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+        }
         isDialogue = false;
         contextCount = 0;
         lineCount = 0;
@@ -83,17 +95,6 @@ public class DialougueManager : MonoBehaviour
         isNext = false;
         _cameraController.CameraTargetting(null, 0.05f, true, true);
         SettingUI(false);
-    }
-
-    private void ChangeSprite()
-    {
-        if (dialogues[lineCount].spriteName[contextCount] != "")
-        {
-            StartCoroutine(_spriteManager.SpriteChangeCoroutine(
-                dialogues[lineCount].tf_target,
-                dialogues[lineCount].spriteName[contextCount]
-                )); 
-        }
     }
 
     private void PlaySound()
@@ -138,6 +139,37 @@ public class DialougueManager : MonoBehaviour
                 StartCoroutine(_splashManager.FadeOut(true, true));
                 yield return new WaitUntil(()=> SplashManager.isFinished);
                 break;
+            case CameraType.ShowCutScene:
+                SettingUI(false);
+                CutSceneManager.isFinished = false;
+                StartCoroutine(_cutSceneManager.CutSceneCoroutine(dialogues[lineCount].spriteName[contextCount], true));
+                yield return new WaitUntil(()=> CutSceneManager.isFinished);
+                break;
+            case CameraType.HideCutScene:
+                SettingUI(false);
+                CutSceneManager.isFinished = false;
+                StartCoroutine(_cutSceneManager.CutSceneCoroutine(null, false));
+                yield return new WaitUntil(() => CutSceneManager.isFinished);
+                _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+                break;
+            case CameraType.AppearSlideCG:
+                SlideManager.isFinished = false;
+                StartCoroutine(_slideManager.AppearSlide(SplitSlideCGName()));
+                yield return new WaitUntil(()=> SlideManager.isFinished);
+                _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+                break;
+            case CameraType.DisappearSlideCG:
+                SlideManager.isFinished = false;
+                StartCoroutine(_slideManager.DisappearSlide());
+                yield return new WaitUntil(() => SlideManager.isFinished);
+                _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+                break;
+            case CameraType.ChangeSlideCG:
+                SlideManager.isChanged = false;
+                StartCoroutine(_slideManager.ChangeSlide(SplitSlideCGName()));
+                yield return new WaitUntil(() => SlideManager.isChanged);
+                _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
+                break;
         }
         StartCoroutine(TypeWriter());
     }
@@ -180,6 +212,34 @@ public class DialougueManager : MonoBehaviour
             yield return new WaitForSeconds(textDelay);
         }
         isNext = true;
+    }
+
+    private void ChangeSprite()
+    {
+        if (dialogues[lineCount].tf_target != null)
+        {
+            if (dialogues[lineCount].spriteName[contextCount] != "")
+            {
+                StartCoroutine(_spriteManager.SpriteChangeCoroutine(
+                    dialogues[lineCount].tf_target,
+                    dialogues[lineCount].spriteName[contextCount].Split(new char[] { '/' })[0]
+                    ));
+            }
+        }
+    }
+
+    private string SplitSlideCGName()
+    {
+        string _text = dialogues[lineCount].spriteName[contextCount];
+        string[] arr = _text.Split(new char[] { '/' });
+        if (arr.Length <= 1)
+        {
+            return arr[0];
+        }
+        else
+        {
+            return arr[1];
+        }
     }
 
     private void SettingUI(bool flag)

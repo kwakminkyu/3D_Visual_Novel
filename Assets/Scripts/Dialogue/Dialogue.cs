@@ -9,7 +9,12 @@ public enum CameraType
     FadeOut,
     FadeIn,
     FlashOut,
-    FlashIn
+    FlashIn,
+    ShowCutScene,
+    HideCutScene,
+    AppearSlideCG,
+    DisappearSlideCG,
+    ChangeSlideCG
 }
 
 [System.Serializable]

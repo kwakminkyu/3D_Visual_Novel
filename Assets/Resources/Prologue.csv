@@ -1,7 +1,14 @@
-ID,Name,Context,Sprite Name ,Voice Name,Comment
-1,BongRan,①Hi..I'm ⓨBongRanⓦ,BongRan0,bongran00,Introduction BongRan
-,,your name..,BongRan1,,
-2,Protagonist,Oh!.. HI!,,,
-,,I'm Jone Smith \nBut` you can just call me Jonney,,,
-3,BongRan,Ok..Jonney,BongRan0,bongran01,
-4,,②ⓒBongRan said weaklyⓦ,,,
+ID,Name,Context,Sprite Name / SlideCG Name,Voice Name,Index,Comment
+1,BongRan,①Hi..I'm ⓨBongRanⓦ,BongRan0/MenuPad,bongran00,0,Slide Appear / Introduction BongRan
+,,your name..,BongRan1,,,
+2,Protagonist,Oh!.. HI!,MenuPad,,1,Slide Change
+,,I'm Protagonist \nBut` you can just call me Pro,,,,
+3,BongRan,Ok..Pro,BongRan0,bongran01,2,Slide Disappear
+4,,ⓒBongRan said weaklyⓦ,,,3,
+5,,①Pro..do you happen to know what that is?,,,4,
+6,,ⓒAt the tip of Bong-ran pointed finger...,,,5,
+7,,②ⓒInside were strange experimental instruments and \na red liquid that resembled blood,CG 2F_Biological_2,,6,Show CutScene
+,,ⓒIt's as if it's urging to solve a mystery...,,,,
+8,Protagonist,Well... um... I'm not quite sure what that is either..,,,7,Hide CutScene
+9,BongRan,Ah` I see..,BongRan1,,8,
+10,Protagonist,...sorry,,,9,
