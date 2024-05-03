@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InteractionEvent : MonoBehaviour
 {
+    [SerializeField] private bool isAutoEvent;
     [SerializeField] private DialogueEvent dialogueEvent;
 
     public Dialogue[] GetDialogue()
@@ -18,5 +19,26 @@ public class InteractionEvent : MonoBehaviour
         dialogueEvent.dialogues = targetDialogueEvent.dialogues;
 
         return dialogueEvent.dialogues;
+    }
+
+    public AppearType GetAppearType()
+    {
+        return dialogueEvent.appearType;
+    }
+
+    public GameObject[] GetTargets()
+    {
+        return dialogueEvent.targets;
+    }
+
+    private void Update()
+    {
+        if (isAutoEvent && DataManager.isFinish)
+        {
+            DialougueManager _dialougueManager = FindAnyObjectByType<DialougueManager>();
+            _dialougueManager.ShowDialogue(GetDialogue());
+
+            gameObject.SetActive(false);
+        }
     }
 }

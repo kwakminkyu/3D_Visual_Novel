@@ -133,10 +133,18 @@ public class InteractionController : MonoBehaviour
 
     private IEnumerator WaitCollision()
     {
-        yield return new WaitUntil(()=>QuestionEffect.isCollide);
+        yield return new WaitUntil(()=> QuestionEffect.isCollide);
         QuestionEffect.isCollide = false;
 
-        _dialougueManager.ShowDialogue(hitInfo.transform.GetComponent<InteractionEvent>().GetDialogue());
+        yield return new WaitForSeconds(0.5f);
+
+        InteractionEvent targetEvent = hitInfo.transform.GetComponent<InteractionEvent>();
+
+        if (targetEvent.GetAppearType() == AppearType.Appear)
+            _dialougueManager.SetAppearObjects(targetEvent.GetTargets());
+        else if (targetEvent.GetAppearType() == AppearType.Disappear)
+            _dialougueManager.SetDisappearObjects(targetEvent.GetTargets());
+        _dialougueManager.ShowDialogue(targetEvent.GetDialogue());
     }
 
     private IEnumerator Interaction(bool appear)

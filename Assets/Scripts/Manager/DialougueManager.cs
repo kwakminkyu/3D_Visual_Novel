@@ -23,6 +23,23 @@ public class DialougueManager : MonoBehaviour
     private int lineCount;
     private int contextCount;
 
+    // 이벤트 끝날때 등장/퇴장 시킬 오브젝트
+    private GameObject[] targetGameObjects;
+    private byte appearTypeNumber;
+    private const byte NONE = 0, APPEAR = 1, DISAPPEAR = 2;
+
+    public void SetAppearObjects(GameObject[] target)
+    {
+        targetGameObjects = target;
+        appearTypeNumber = APPEAR;
+    }
+    
+    public void SetDisappearObjects(GameObject[] target)
+    {
+        targetGameObjects = target;
+        appearTypeNumber = DISAPPEAR;
+    }
+
     private CameraController _cameraController;
     private InteractionController _interactionController;
     private SpriteManager _spriteManager;
@@ -88,6 +105,10 @@ public class DialougueManager : MonoBehaviour
             yield return new WaitUntil(() => CutSceneManager.isFinished);
             _cameraController.CameraTargetting(dialogues[lineCount].tf_target);
         }
+        AppearOrDisappearObjects();
+
+        yield return new WaitUntil(() => Spin.isFinished);
+
         isDialogue = false;
         contextCount = 0;
         lineCount = 0;
@@ -95,6 +116,26 @@ public class DialougueManager : MonoBehaviour
         isNext = false;
         _cameraController.CameraTargetting(null, 0.05f, true, true);
         SettingUI(false);
+    }
+
+    private void AppearOrDisappearObjects()
+    {
+        if (targetGameObjects != null)
+        {
+            Spin.isFinished = false;
+            for (int i = 0; i < targetGameObjects.Length; i++)
+            {
+                if (appearTypeNumber == APPEAR)
+                {
+                    targetGameObjects[i].SetActive(true);
+                    StartCoroutine(targetGameObjects[i].GetComponent<Spin>().SetAppearOrDisappear(true));
+                }
+                else if (appearTypeNumber == DISAPPEAR)
+                    StartCoroutine(targetGameObjects[i].GetComponent<Spin>().SetAppearOrDisappear(false));
+            }
+        }
+        targetGameObjects = null;
+        appearTypeNumber = NONE;
     }
 
     private void PlaySound()
