@@ -7,7 +7,7 @@ public class Spin : MonoBehaviour
     [SerializeField] private Transform tf_target;
 
     private bool spin = false;
-    public static bool isFinished = false;
+    public static bool isFinished = true;
 
     private void Update()
     {

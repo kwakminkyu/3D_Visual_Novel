@@ -6338,11 +6338,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ff2333dc872f944a23f3bb21462a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAutoEvent: 0
+  isAutoEvent: 1
   dialogueEvent:
     name: Introduction
-    line: {x: 0, y: 0}
-    dialogues: []
+    line: {x: 1, y: 4}
+    dialogues:
+    - cameraType: 0
+      tf_target: {fileID: 319386874}
+      name: 
+      contexts: []
+      spriteName: []
+      voiceName: []
+    - cameraType: 0
+      tf_target: {fileID: 0}
+      name: 
+      contexts: []
+      spriteName: []
+      voiceName: []
+    - cameraType: 0
+      tf_target: {fileID: 0}
+      name: 
+      contexts: []
+      spriteName: []
+      voiceName: []
+    - cameraType: 1
+      tf_target: {fileID: 0}
+      name: 
+      contexts: []
+      spriteName: []
+      voiceName: []
     appearType: 0
     targets: []
 --- !u!1 &467713882

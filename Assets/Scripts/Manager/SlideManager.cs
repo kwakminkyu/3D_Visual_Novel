@@ -9,7 +9,7 @@ public class SlideManager : MonoBehaviour
     [SerializeField] private Image slideCG;
     [SerializeField] private Animator anim;
 
-    public static bool isFinished= false;
+    public static bool isFinished= true;
     public static bool isChanged= false;
 
     public IEnumerator AppearSlide(string slideName)

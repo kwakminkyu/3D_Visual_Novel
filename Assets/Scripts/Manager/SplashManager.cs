@@ -13,7 +13,7 @@ public class SplashManager : MonoBehaviour
     [SerializeField] private float fadeSpeed;
     [SerializeField] private float fadeSlowSpeed;
 
-    public static bool isFinished = false;
+    public static bool isFinished = true;
 
     public IEnumerator Splash()
     {

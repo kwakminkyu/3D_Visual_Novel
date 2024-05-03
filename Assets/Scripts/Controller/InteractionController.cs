@@ -31,10 +31,21 @@ public class InteractionController : MonoBehaviour
     {
         crosshair.SetActive(flag);
         cursor.SetActive(flag);
-        targetNameBar.SetActive(flag);
+        if (!flag)
+        {
+            StopCoroutine("Interaction");
+            Color color = img_Interaction.color;
+            color.a = 0;
+            img_Interaction.color = color;
+            targetNameBar.SetActive(false);
+        }
+        else
+        {
+            normalCrosshair.SetActive(true);
+            InteractiveCrosshair.SetActive(false);
+        }
         isInteract = !flag;
     }
-
 
     private void Awake()
     {

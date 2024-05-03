@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DialougueManager : MonoBehaviour
 {
+    public static bool isWaiting = false;
     [SerializeField] private GameObject dialogueBar;
     [SerializeField] private GameObject dialogueNameBar;
 
@@ -13,7 +14,7 @@ public class DialougueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtName;
 
     Dialogue[] dialogues;
-
+        
     private bool isDialogue = false;
     private bool isNext = false;
 
@@ -91,6 +92,14 @@ public class DialougueManager : MonoBehaviour
         txtName.text = "";
         _interactionController.SettingUI(false);
         this.dialogues = dialogues;
+        StartCoroutine(StartDialogue());
+    }
+
+    private IEnumerator StartDialogue()
+    {
+        if (isWaiting)
+            yield return new WaitForSeconds(0.5f);
+        isWaiting = false;
         _cameraController.CamOriginSetting();
         StartCoroutine(CameraTargettingType());
     }

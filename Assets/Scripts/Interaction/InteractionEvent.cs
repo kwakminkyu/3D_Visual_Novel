@@ -36,6 +36,11 @@ public class InteractionEvent : MonoBehaviour
         if (isAutoEvent && DataManager.isFinish)
         {
             DialougueManager _dialougueManager = FindAnyObjectByType<DialougueManager>();
+            DialougueManager.isWaiting = true;
+            if (GetAppearType() == AppearType.Appear)
+                _dialougueManager.SetAppearObjects(GetTargets());
+            else if (GetAppearType() == AppearType.Disappear)
+                _dialougueManager.SetDisappearObjects(GetTargets());
             _dialougueManager.ShowDialogue(GetDialogue());
 
             gameObject.SetActive(false);
