@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
         if (isFinish)
         {
             _playerController.ResetCam();
-            _interactionController.SettingUI(true);
+            InteractionController.isInteract = false;
         }
     }
 }

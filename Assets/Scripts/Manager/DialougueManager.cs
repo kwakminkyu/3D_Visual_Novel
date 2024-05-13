@@ -21,8 +21,14 @@ public class DialougueManager : MonoBehaviour
     [Header("텍스트 출력 딜레이")]
     [SerializeField] private float textDelay;
     
-    private int lineCount;
-    private int contextCount;
+    private int lineCount; // 대화 카운트
+    private int contextCount; // 대사 카운트
+
+    private GameObject nextEvent;
+    public void SetNextEvent(GameObject nEvent)
+    {
+        nextEvent = nEvent;
+    }
 
     // 이벤트 끝날때 등장/퇴장 시킬 오브젝트
     private GameObject[] targetGameObjects;
@@ -106,9 +112,10 @@ public class DialougueManager : MonoBehaviour
 
     private IEnumerator EndDialogue()
     {
+        SettingUI(false);
         if (_cutSceneManager.CheckCutScene())
         {
-            SettingUI(false);
+            //SettingUI(false);
             CutSceneManager.isFinished = false;
             StartCoroutine(_cutSceneManager.CutSceneCoroutine(null, false));
             yield return new WaitUntil(() => CutSceneManager.isFinished);
@@ -124,7 +131,18 @@ public class DialougueManager : MonoBehaviour
         dialogues = null;
         isNext = false;
         _cameraController.CameraTargetting(null, 0.05f, true, true);
-        SettingUI(false);
+        yield return new WaitUntil(()=> !InteractionController.isInteract);
+
+        //SettingUI(false);
+        if (nextEvent != null)
+        {
+            nextEvent.SetActive(true);
+            nextEvent = null;
+        }
+        else
+        {
+            _interactionController.SettingUI(true);
+        }
     }
 
     private void AppearOrDisappearObjects()

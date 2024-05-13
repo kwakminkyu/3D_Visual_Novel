@@ -5785,10 +5785,11 @@ MonoBehaviour:
       contexts: []
       spriteName: []
       voiceName: []
-    appearType: 2
+    appearType: 0
     targets:
     - {fileID: 800894694}
     - {fileID: 762633541}
+    nextEvent: {fileID: 456026182}
 --- !u!114 &319386878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6310,7 +6311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &456026183
 Transform:
   m_ObjectHideFlags: 0
@@ -6369,6 +6370,7 @@ MonoBehaviour:
       voiceName: []
     appearType: 0
     targets: []
+    nextEvent: {fileID: 0}
 --- !u!1 &467713882
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,6 +31,11 @@ public class InteractionEvent : MonoBehaviour
         return dialogueEvent.targets;
     }
 
+    public GameObject GetNextEvent()
+    {
+        return dialogueEvent.nextEvent;
+    }
+
     private void Update()
     {
         if (isAutoEvent && DataManager.isFinish)
@@ -38,9 +43,14 @@ public class InteractionEvent : MonoBehaviour
             DialougueManager _dialougueManager = FindAnyObjectByType<DialougueManager>();
             DialougueManager.isWaiting = true;
             if (GetAppearType() == AppearType.Appear)
+            {
                 _dialougueManager.SetAppearObjects(GetTargets());
+            }
             else if (GetAppearType() == AppearType.Disappear)
+            {
                 _dialougueManager.SetDisappearObjects(GetTargets());
+            }
+            _dialougueManager.SetNextEvent(GetNextEvent());
             _dialougueManager.ShowDialogue(GetDialogue());
 
             gameObject.SetActive(false);

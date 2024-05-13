@@ -150,6 +150,7 @@ public class InteractionController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         InteractionEvent targetEvent = hitInfo.transform.GetComponent<InteractionEvent>();
+        _dialougueManager.SetNextEvent(targetEvent.GetNextEvent());
 
         if (targetEvent.GetAppearType() == AppearType.Appear)
             _dialougueManager.SetAppearObjects(targetEvent.GetTargets());
