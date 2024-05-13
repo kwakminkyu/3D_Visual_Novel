@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [SerializeField] private Transform tf_Crosshair;
 
     [SerializeField] private Transform tf_Cam;
@@ -21,6 +23,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject notCamRight;
 
     private float originPosY;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {

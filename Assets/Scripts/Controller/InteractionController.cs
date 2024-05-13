@@ -150,13 +150,30 @@ public class InteractionController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         InteractionEvent targetEvent = hitInfo.transform.GetComponent<InteractionEvent>();
-        _dialougueManager.SetNextEvent(targetEvent.GetNextEvent());
 
-        if (targetEvent.GetAppearType() == AppearType.Appear)
-            _dialougueManager.SetAppearObjects(targetEvent.GetTargets());
-        else if (targetEvent.GetAppearType() == AppearType.Disappear)
-            _dialougueManager.SetDisappearObjects(targetEvent.GetTargets());
-        _dialougueManager.ShowDialogue(targetEvent.GetDialogue());
+        if (hitInfo.transform.GetComponent<InteractionType>().isObject)
+            DialogueCall(targetEvent);
+        else
+            TransferCall();
+    }
+
+    private void TransferCall()
+    {
+        InteractionDoor door = hitInfo.transform.GetComponent<InteractionDoor>();
+        string callSceneName = door.GetSceneName();
+        string callLocationName = door.GetLocationName();
+        StartCoroutine(FindAnyObjectByType<TransferManager>().Transfer(callSceneName, callLocationName));
+    }
+
+    private void DialogueCall(InteractionEvent callEvent)
+    {
+        _dialougueManager.SetNextEvent(callEvent.GetNextEvent());
+
+        if (callEvent.GetAppearType() == AppearType.Appear)
+            _dialougueManager.SetAppearObjects(callEvent.GetTargets());
+        else if (callEvent.GetAppearType() == AppearType.Disappear)
+            _dialougueManager.SetDisappearObjects(callEvent.GetTargets());
+        _dialougueManager.ShowDialogue(callEvent.GetDialogue());
     }
 
     private IEnumerator Interaction(bool appear)
