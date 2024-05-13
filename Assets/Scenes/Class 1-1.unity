@@ -16680,7 +16680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Corridor
-  locationName: Class 1-1 To Corridor
+  locationName: Class1-1ToCorridor
 --- !u!1 &1862964690
 GameObject:
   m_ObjectHideFlags: 0
