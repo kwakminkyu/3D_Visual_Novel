@@ -29,6 +29,11 @@ public class TransferSpawnManager : MonoBehaviour
             Transform spawn = locationDic[locationName];
             PlayerController.instance.transform.position = spawn.position;
             PlayerController.instance.transform.rotation = spawn.rotation;
+            Camera.main.transform.localPosition = new Vector3(0,1,0);
+            Camera.main.transform.localEulerAngles = Vector3.zero;
+            PlayerController.instance.ResetCam();
+
+            StartCoroutine(_transferManager.Done());
             spawnTiming = false;
         }
     }
