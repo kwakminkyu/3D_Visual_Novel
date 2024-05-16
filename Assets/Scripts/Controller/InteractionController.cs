@@ -16,6 +16,7 @@ public class InteractionController : MonoBehaviour
     [SerializeField] private GameObject InteractiveCrosshair;
     [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject cursor;
+    [SerializeField] private GameObject fieldCursor;
     [SerializeField] private GameObject targetNameBar;
     [SerializeField] private TextMeshProUGUI targetName;
 
@@ -30,7 +31,6 @@ public class InteractionController : MonoBehaviour
     public void SettingUI(bool flag)
     {
         crosshair.SetActive(flag);
-        cursor.SetActive(flag);
         if (!flag)
         {
             StopCoroutine("Interaction");
@@ -38,9 +38,15 @@ public class InteractionController : MonoBehaviour
             color.a = 0;
             img_Interaction.color = color;
             targetNameBar.SetActive(false);
+            cursor.SetActive(false);
+            fieldCursor.SetActive(false);
         }
         else
         {
+            if (CameraController.onlyView)
+                cursor.SetActive(true);
+            else
+                fieldCursor.SetActive(true);
             normalCrosshair.SetActive(true);
             InteractiveCrosshair.SetActive(false);
         }
@@ -63,15 +69,21 @@ public class InteractionController : MonoBehaviour
 
     private void CheckObject()
     {
-        Vector3 t_MousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-
-        if (Physics.Raycast(cam.ScreenPointToRay(t_MousePos), out hitInfo, 100f))
+        if (CameraController.onlyView)
         {
-            Contact();
+            Vector3 t_MousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+
+            if (Physics.Raycast(cam.ScreenPointToRay(t_MousePos), out hitInfo, 100f))
+                Contact();
+            else
+                NotContact();
         }
         else
         {
-            NotContact();
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, 3f))
+                Contact();
+            else
+                NotContact();
         }
     }
 
@@ -86,10 +98,13 @@ public class InteractionController : MonoBehaviour
                 isContact = true;
                 InteractiveCrosshair.SetActive(true);
                 normalCrosshair.SetActive(false);
-                StopCoroutine("Interaction");
-                StopCoroutine("InteractionEffect");
-                StartCoroutine("Interaction", true);
-                StartCoroutine("InteractionEffect");
+                if (!CameraController.onlyView)
+                {
+                    StopCoroutine("Interaction");
+                    StopCoroutine("InteractionEffect");
+                    StartCoroutine("Interaction", true);
+                    StartCoroutine("InteractionEffect");
+                }
             }
         }
         else
@@ -106,8 +121,11 @@ public class InteractionController : MonoBehaviour
             targetNameBar.SetActive(false);
             InteractiveCrosshair.SetActive(false);
             normalCrosshair.SetActive(true);
-            StopCoroutine("Interaction");
-            StartCoroutine("Interaction", false);
+            if (!CameraController.onlyView)
+            {
+                StopCoroutine("Interaction");
+                StartCoroutine("Interaction", false);
+            }
         }
     }
 
