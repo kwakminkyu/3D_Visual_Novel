@@ -5811,7 +5811,12 @@ MonoBehaviour:
   isAutoEvent: 0
   dialogueEvent:
     name: Introduction BongRan
-    line: {x: 1, y: 10}
+    eventTiming:
+      eventNum: 1
+      eventConditions: 00000000
+      conditionFlag: 0
+      eventEndNum: 1
+    line: {x: 1, y: 1}
     dialogues:
     - cameraType: 0
       tf_target: {fileID: 319386874}
@@ -5819,64 +5824,10 @@ MonoBehaviour:
       contexts: []
       spriteName: []
       voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 319386874}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 0
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    - cameraType: 1
-      tf_target: {fileID: 0}
-      name: 
-      contexts: []
-      spriteName: []
-      voiceName: []
-    appearType: 0
+    appearType: 2
     targets:
-    - {fileID: 762633541}
-    nextEvent: {fileID: 456026182}
+    - {fileID: 319386873}
+    nextEvent: {fileID: 0}
 --- !u!114 &319386878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5889,7 +5840,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e15663d678c7d4c8276df2758e7f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tf_target: {fileID: 1545585611}
 --- !u!1 &342511491
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,6 +6378,11 @@ MonoBehaviour:
   isAutoEvent: 1
   dialogueEvent:
     name: Introduction
+    eventTiming:
+      eventNum: 0
+      eventConditions: 
+      conditionFlag: 0
+      eventEndNum: 0
     line: {x: 1, y: 4}
     dialogues:
     - cameraType: 0
@@ -8119,7 +8074,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e15663d678c7d4c8276df2758e7f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tf_target: {fileID: 1545585611}
 --- !u!114 &762633544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15559,6 +15513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   csvFileName: Prologue
+  eventFlags: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &1765972441
 MonoBehaviour:
   m_ObjectHideFlags: 0

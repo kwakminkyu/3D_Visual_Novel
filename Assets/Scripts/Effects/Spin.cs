@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    [SerializeField] private Transform tf_target;
+    private Transform tf_target;
 
     private bool spin = false;
     public static bool isFinished = true;
+
+    private void Start()
+    {
+        tf_target = PlayerController.instance.transform;    
+    }
 
     private void Update()
     {

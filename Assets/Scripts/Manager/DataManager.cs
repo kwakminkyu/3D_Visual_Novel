@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour
 
     Dictionary<int, Dialogue> dialogueDic = new Dictionary<int, Dialogue>();
 
+    public bool[] eventFlags = new bool[100];
+
     public static bool isFinish = false;
 
     private void Awake()
