@@ -170,9 +170,16 @@ public class InteractionController : MonoBehaviour
         InteractionEvent targetEvent = hitInfo.transform.GetComponent<InteractionEvent>();
 
         if (hitInfo.transform.GetComponent<InteractionType>().isObject)
+        {
             DialogueCall(targetEvent);
+        }
         else
-            TransferCall();
+        {
+            if (targetEvent != null && targetEvent.GetDialogue() != null)
+                DialogueCall(targetEvent);
+            else
+                TransferCall();
+        }
     }
 
     private void TransferCall()
@@ -185,12 +192,15 @@ public class InteractionController : MonoBehaviour
 
     private void DialogueCall(InteractionEvent callEvent)
     {
-        _dialougueManager.SetNextEvent(callEvent.GetNextEvent());
+        if (!DataManager.instance.eventFlags[callEvent.GetEventNumber()])
+        {
+            _dialougueManager.SetNextEvent(callEvent.GetNextEvent());
 
-        if (callEvent.GetAppearType() == AppearType.Appear)
-            _dialougueManager.SetAppearObjects(callEvent.GetTargets());
-        else if (callEvent.GetAppearType() == AppearType.Disappear)
-            _dialougueManager.SetDisappearObjects(callEvent.GetTargets());
+            if (callEvent.GetAppearType() == AppearType.Appear)
+                _dialougueManager.SetAppearObjects(callEvent.GetTargets());
+            else if (callEvent.GetAppearType() == AppearType.Disappear)
+                _dialougueManager.SetDisappearObjects(callEvent.GetTargets());
+        }
         _dialougueManager.ShowDialogue(callEvent.GetDialogue());
     }
 

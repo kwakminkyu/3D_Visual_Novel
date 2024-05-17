@@ -56,12 +56,20 @@ public class DialogueEvent
     public string name;
     public EventTiming eventTiming;
 
+    [Space]
     public Vector2 line;
     public Dialogue[] dialogues;
 
     [Space]
+    public Vector2 line2nd;
+    public Dialogue[] dialogues2nd;
+
+    [Space]
     public AppearType appearType;
     public GameObject[] targets;
+
     [Space]
     public GameObject nextEvent;
+
+    public bool isSame;
 }
